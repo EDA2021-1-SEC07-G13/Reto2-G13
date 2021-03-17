@@ -1,3 +1,5 @@
+Juan Esteban Cuellar Argotty-202014258-j.cuellara
+David Santiago Vargas Prada-202013826-ds.vargasp1
 #ISIS1225 - Librerias de soporte
 
 Este proyecto contiene los Tipos abstractos de datos, estructuras de datos y algoritmos requeridos por el curso ISIS1225-Estructuras de Datos y Algoritmos
