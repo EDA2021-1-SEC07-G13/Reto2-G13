@@ -27,32 +27,72 @@ from DISClib.ADT import list as lt
 assert cf
 
 
+def printVideosbyCategory(videos):
+    """
+    Imprime los libros que han sido clasificados con
+    una etiqueta
+    """
+    if (videos):
+        print('Se encontraron: ' + str(lt.size(videos)) + ' Videos.')
+        for video in lt.iterator(videos):
+            print(video['title'])
+        print("\n")
+    else:
+        print("No se encontraron Videos.\n")
+
 """
 La vista se encarga de la interacción con el usuario
 Presenta el menu de opciones y por cada seleccion
 se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
+def initCatalog():
+    """
+    Inicializa el catalogo de libros
+    """
+    return controller.initCatalog()
+
+
+def loadData(catalog):
+    """
+    Carga los libros en el catalogo
+    """
+    controller.loadData(catalog)
 
 def printMenu():
     print("Bienvenido")
-    print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("1- Inicializar el catálogo")
+    print("2- Cargar información en el catálogo")
+    print('3- Hallar los n videos con más LIKES para una categoría específica')
+    print('0- Salir')
 
 catalog = None
 
 """
 Menu principal
 """
-while True:
+menu = True
+while menu == True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
+
     if int(inputs[0]) == 1:
-        print("Cargando información de los archivos ....")
+        print("Inicializando Catálogo ....")
+        cont = controller.initCatalog()
+        print('Se ha inicializado el catalogo correctamente')
 
     elif int(inputs[0]) == 2:
-        pass
+        print("Cargando información de los archivos ... Espere en linea")
+        controller.loadData(cont)
+        print('Videos cargados: ' + str(controller.videosSize(cont)))
+    elif int(inputs[0]) == 3:
+        label = input("Categoria a buscar: ")
+        n = int(input("Ingrese el n: "))
+        videos = controller.getVideosByCategory(cont, label, n)
+    elif int(inputs[0]) == 0:
+        menu = False
 
-    else:
-        sys.exit(0)
+
+        
+        
 sys.exit(0)

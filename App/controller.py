@@ -30,9 +30,83 @@ El controlador se encarga de mediar entre la vista y el modelo.
 """
 
 # Inicialización del Catálogo de libros
+def initCatalog():
+    """
+    Llama la funcion de inicializacion del catalogo del modelo.
+    """
+    catalog = model.newCatalog()
+    return catalog
+
 
 # Funciones para la carga de datos
+def loadData(catalog):
+    """
+    Carga los datos de los archivos y cargar los datos en la
+    estructura de datos
+    """
+    loadVideos(catalog)
+    loadCategories(catalog)
+    loadVideosCategories(catalog)
+
+
+def loadVideos(catalog):
+    """
+    Carga los libros del archivo.  Por cada libro se indica al
+    modelo que debe adicionarlo al catalogo.
+    """
+    videosfile = cf.data_dir + 'videos-small.csv'
+    input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
+    
+
+    for video in input_file:
+        
+        
+
+        model.addVideo(catalog, video)
+        
+
+
+def loadCategories(catalog):
+    """
+    Carga todos los categories del archivo e indica al modelo
+    que los adicione al catalogo
+    """
+
+    categoriesfile = cf.data_dir + 'category-id.csv'
+    input_file = csv.DictReader(open(categoriesfile, encoding='utf-8'),delimiter='\t')
+    
+    for category in input_file:
+        category['name'] = category['name'].strip()
+        
+        model.addCategory(catalog, category)
+
+
+def loadVideosCategories(catalog):
+    """
+    Carga la información que asocia categories con libros en el catalogo
+    """
+    videocategoriesfile = cf.data_dir + 'videos-small.csv'
+    input_file = csv.DictReader(open(videocategoriesfile, encoding='utf-8'))
+    
+    for videocategory in input_file:
+        
+        
+        model.addVideoCategory(catalog, videocategory)
+        
 
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
+def videosSize(catalog):
+    """
+    Numero de libros cargados al catalogo
+    """
+    return model.videosSize(catalog)
+
+def getVideosByCategory(catalog, tagname,n):
+    """
+    Retorna los libros que han sido marcados con
+    una etiqueta
+    """
+    videos = model.getVideosByCategory(catalog, tagname,n)
+    return videos
