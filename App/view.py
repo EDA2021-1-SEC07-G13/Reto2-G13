@@ -83,8 +83,16 @@ while menu == True:
 
     elif int(inputs[0]) == 2:
         print("Cargando información de los archivos ... Espere en linea")
-        controller.loadData(cont)
+        
+        
+
+        
+        answer = controller.loadData(cont)
         print('Videos cargados: ' + str(controller.videosSize(cont)))
+        print("Tiempo [ms]: ", f"{answer[0]:.3f}", "  ||  ",
+              "Memoria [kB]: ", f"{answer[1]:.3f}")
+
+
     elif int(inputs[0]) == 3:
         label = input("Categoria a buscar: ")
         n = int(input("Ingrese el n: "))
