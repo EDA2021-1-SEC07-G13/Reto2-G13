@@ -60,7 +60,6 @@ def loadData(catalog):
     controller.loadData(catalog)
 
 def printMenu():
-    print("Bienvenido")
     print("1- Inicializar el catálogo")
     print("2- Cargar información en el catálogo")
     print('3- Hallar los n videos con más LIKES para una categoría específica')

@@ -75,7 +75,7 @@ def loadVideos(catalog):
     Carga los libros del archivo.  Por cada libro se indica al
     modelo que debe adicionarlo al catalogo.
     """
-    videosfile = cf.data_dir + 'videos-small.csv'
+    videosfile = cf.data_dir + 'videos-large.csv'
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     
 

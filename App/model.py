@@ -59,8 +59,8 @@ def newCatalog():
                                    loadfactor=4.0,
                                    comparefunction=compareMapVideoIds)
     catalog['categories'] = mp.newMap(37,
-                                     maptype='PROBING',
-                                   loadfactor=0.5,
+                                     maptype='CHAINING',
+                                   loadfactor=6.0 ,
                                    comparefunction=compareCategoriesNames)
     catalog['category-id'] = mp.newMap(37,
                                      maptype='CHAINING',
