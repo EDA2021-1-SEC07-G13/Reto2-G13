@@ -233,12 +233,24 @@ def getVideosByCategory(catalog, categoryname,country,n):
     todoslosvideos = catalog['videos']
     size = lt.size(todoslosvideos)
     dicpaislikes = dict()
+    diccionpabuscar = dict()
+    '''
     for i in range(size):
         element = lt.getElement(todoslosvideos,i)
         if element['title'] in lista:
             if element['country'] == country:
-                dicpaislikes[element["title"]]=element["views"]
+                dicpaislikes[element["title"]]=element["views"]'''
     
+    for i in range(size):
+        element = lt.getElement(todoslosvideos,i)
+        if element['title'] in lista and element['country'] == country:
+            if element['title'] in dicpaislikes:
+                if element['views']>dicpaislikes[element['title']]:
+                    dicpaislikes[element["title"]]=element["views"]
+                    diccionpabuscar[element["title"]]=[element["likes"],element['channel_title'],element['publish_time'],element['views'],element['likes'],element['dislikes'],element['trending_date']]
+            else:
+                dicpaislikes[element["title"]]=element["views"]
+                diccionpabuscar[element["title"]]=[element["likes"],element['channel_title'],element['publish_time'],element['views'],element['likes'],element['dislikes'],element['trending_date']]   
     contador = 0
     listafinal = []
     #maximo=max(dicpaislikes, key=dicpaislikes.get)
@@ -266,32 +278,9 @@ def getVideosByCategory(catalog, categoryname,country,n):
         dicpaislikes.pop(maximo)
         contador += 1
     
-    for titulo in listafinal:
-        for i in range(size):
-            element = lt.getElement(todoslosvideos,i)
-            if element['title'] == titulo:
-                print('♥   ♠  ♣  ♦')
-                print('Title: ')
-                print(element['title'])
-                print('-')
-                print('Channel title: ')
-                print(element['channel_title'])
-                print('-')
-                print('Publish time: ')
-                print(element['publish_time'])
-                print('-')
-                print('views: ')
-                print(element['views'])
-                print('-')
-                print('likes: ')
-                print(element['likes'])
-                print('-')
-                print('dislikes: ')
-                print(element['dislikes'])
-                print('-')
-                print('tags: ')
-                print(element['tags'])
-                print('♥   ♠  ♣  ♦')
+    for i in listafinal:
+        print(i,diccionpabuscar[i][0],diccionpabuscar[i][1],diccionpabuscar[i][2],diccionpabuscar[i][3],diccionpabuscar[i][4],diccionpabuscar[i][5],diccionpabuscar[i][6])
+        print("\n")
 
     stop_memory = getMemory()
     stop_time = getTime()
