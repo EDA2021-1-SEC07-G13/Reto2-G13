@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
-
+from DISClib.ADT import list as lt
 import config as cf
 import model
 import csv
@@ -27,6 +27,11 @@ import tracemalloc
 import time
 
 
+
+from DISClib.ADT import map as mp
+from DISClib.DataStructures import mapentry as me
+from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import mergesort as merge
 """
 El controlador se encarga de mediar entre la vista y el modelo.
 """
@@ -75,16 +80,64 @@ def loadVideos(catalog):
     Carga los libros del archivo.  Por cada libro se indica al
     modelo que debe adicionarlo al catalogo.
     """
-    videosfile = cf.data_dir + 'videos-large.csv'
+    videosfile = cf.data_dir + 'videos-small.csv'
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     
-
+    #listapaises = []
     for video in input_file:
-        
-        
-
         model.addVideo(catalog, video)
-        
+        model.addCountry(catalog,video['country'].strip(),video)
+        tagsporvideo =video['tags'].replace('"', '').split('|')
+        for tag in tagsporvideo:
+            model.addTag(catalog,tag.lower(),video)
+    #print(mp.get(catalog['countries'],'USA'))
+'''
+        pais = video['country']
+        print('pais')
+        if pais in listapaises:
+            pass
+        else:
+            listapaises.append(pais)
+        print('lista hecha')
+    for pais in listapaises:
+        print('por cada pais en la lista tan')
+        model.addCountry(catalog,pais)
+    loadvideostocountry(catalog)
+    return listapaises
+
+
+def loadvideostocountry(catalog):
+    videosfile = cf.data_dir + 'videos-small.csv'
+    input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
+    listapaises=loadVideos(catalog)
+    for pais in listapaises:
+        for video in input_file:
+   
+            print(video['country'])
+            print('♦♦♦')
+            print(pais)
+            print('****')
+                
+            
+            model.addVideostoCountry(catalog,pais,video)
+       
+"""
+
+    print('Prueba 2')
+    print(listapaises)
+    for pais in listapaises:
+        print('Preuba 3')
+        model.addCountry(catalog,pais)
+        print('Preuba 4')
+    for video in input_file:
+        for pais in listapaises:
+            print(video['country'])
+            print(pais)
+            if video['country'] == pais:
+                print('prueba 5')
+                model.addVideostoCountry(catalog,pais,video)
+                
+'''
 
 
 def loadCategories(catalog):
@@ -110,10 +163,8 @@ def loadVideosCategories(catalog):
     input_file = csv.DictReader(open(videocategoriesfile, encoding='utf-8'))
     
     for videocategory in input_file:
-        
-        
         model.addVideoCategory(catalog, videocategory)
-        
+
 
 # Funciones de ordenamiento
 
@@ -124,12 +175,12 @@ def videosSize(catalog):
     """
     return model.videosSize(catalog)
 
-def getVideosByCategory(catalog, tagname,n):
+def getVideosByCategory(catalog, tagname,country,n):
     """
     Retorna los libros que han sido marcados con
     una etiqueta
     """
-    videos = model.getVideosByCategory(catalog, tagname,n)
+    videos = model.getVideosByCategory(catalog, tagname,country,n)
     return videos
 
 # ======================================
@@ -165,3 +216,12 @@ def deltaMemory(start_memory, stop_memory):
     # de Byte -> kByte
     delta_memory = delta_memory/1024.0
     return delta_memory
+
+def sacarmasrepetidocountry(catalog,pais):
+    return model.sacarmasrepetidocountry(catalog,pais)
+
+def sacarmasrepetidocategory(catalog,category):
+    return model.sacarmasrepetidocategory(catalog,category)
+
+def req4(catalog,tag,country,n):
+    return model.req4(catalog,tag,country,n)

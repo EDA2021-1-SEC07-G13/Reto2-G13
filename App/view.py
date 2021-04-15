@@ -27,6 +27,7 @@ from DISClib.ADT import list as lt
 assert cf
 
 
+
 def printVideosbyCategory(videos):
     """
     Imprime los libros que han sido clasificados con
@@ -62,7 +63,10 @@ def loadData(catalog):
 def printMenu():
     print("1- Inicializar el catálogo")
     print("2- Cargar información en el catálogo")
-    print('3- Hallar los n videos con más LIKES para una categoría específica')
+    print('3- Hallar los n videos con más LIKES para un pais y categoría específica')
+    print('4- Hallar video que más días ha sido trending para un país específico')
+    print('5- Hallar video que más días ha sido trending para una categoria específica')
+    print('6- Requerimiento 4')
     print('0- Salir')
 
 catalog = None
@@ -94,8 +98,28 @@ while menu == True:
 
     elif int(inputs[0]) == 3:
         label = input("Categoria a buscar: ")
+        country = input("Pais a buscar: ")
         n = int(input("Ingrese el n: "))
-        videos = controller.getVideosByCategory(cont, label, n)
+        videos = controller.getVideosByCategory(cont, label,country, n)
+
+
+    elif int(inputs[0]) == 4:
+        label = input("Pais a buscar: ")
+        f = controller.sacarmasrepetidocountry(cont,label)
+        print(f)
+
+    elif int(inputs[0]) == 5:
+        label = input("Categoria a buscar: ")
+        f = controller.sacarmasrepetidocategory(cont,label)
+        print(f)
+
+    elif int(inputs[0]) == 6:
+        country = input("Pais a buscar: ")
+        tag = input('Tag a buscar: ').lower()
+        n = int(input("Ingrese el n: "))
+        f = controller.req4(cont,tag,country,n)
+        
+
     elif int(inputs[0]) == 0:
         menu = False
 
